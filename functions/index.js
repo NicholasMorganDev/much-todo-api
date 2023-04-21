@@ -1,7 +1,7 @@
 import functions from 'firebase-functions';
 import express from "express";
 import cors from "cors";
-import { addNewItem, deleteItem, getAllItems, editItem } from './src/items';
+import { addNewItem, deleteItem, getAllItems, editItem } from './src/items.js';
 
 const app = express();
 app.use(cors());

@@ -1,13 +1,14 @@
 import { db } from "./dbConnect.js";
-import { FieldValue } from "firebase-admin/firestore";
+//import { FieldValue } from "firebase-admin/firestore";
 
 const coll = db.collection('tasks')
 
-export async function addNewItem () {
+export async function addNewItem (req, res) {
   const newItem = req.body
-  newItem.createdAt = FieldValue.serverTimestamp();
+  //newItem.createdAt = FieldValue.serverTimestamp();
   await coll.add(newItem)
-  res.status(201).send({message: 'Item added'})
+    .catch(err => res.status(500).send(err))
+    //res.status(201).send({message: 'Item added'})
   getAllItems(req, res)
 }
 
@@ -26,8 +27,8 @@ export async function editItem (req, res) {
 }
 
 export async function deleteItem (req, res) {
-  const { itemId } = req.params
-  await coll.count(itemId).delete()
+  const { itemId } = req.params;
+  await coll.doc(itemId).delete()
     .catch(err => res.status(500).send(err))
   res.status(202).send({message: "Item Deleted"})
 }
